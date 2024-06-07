@@ -1,1 +1,114 @@
+#INTRODUCTION TO PYTHON
+
+
+#Input and oytput statments
+#inpuut
+fruit = input("Enter name of a fruit")
+print(fruit, "is a fruit")
+#output
+print("Greetings", "Everyone", sep=", ", end="!\n")
+
+
+#Expressions and Operators
+a = 5
+b = 4
+#Airthmatic operators
+print(a+b) #9 addition
+print(a-b) #1 subtraction
+print(a*b) #20 multiply
+print(a/b) #1.25 divide
+print(a//b) #1 floor division
+print(a%b) #1 Modulus
+print(a**b) #625 power
+
+#comparision operators
+print(a == b) # Equal to: False
+print(a != b) # Not equal to: True
+print(a > b)  # Greater than: True
+print(a < b)  # Less than: False
+print(a >= b) # Greater than or equal to: True
+print(a <= b) # Less than or equal to: False
+
+#Logical Operators
+print(a > 5 and b < 5)  # and: False
+print(a > 5 or b < 1)   # or: False
+print(not(a > 5 and b < 5)) # not: False
+
+
+
+#Type Casting
+
+int_from_float = int(5.56)
+float_from_int = float(10)
+string_from_int = str(100)
+list_from_string = list("Hello")
+tuple_from_list = tuple([1, 2, 3, 4])
+set_from_list = set([1, 2, 3, 4])
+
+print(int_from_float) #5
+print(float_from_int) #10.0
+print(string_from_int) #100
+print(list_from_string) #['H', 'e', 'l', 'l', 'o']
+print(tuple_from_list) #(1, 2, 3, 4)
+print(set_from_list) #{1, 2, 3, 4}
+
+
+
+#Conditional Statments
+Temperature = 44
+if Temperature > 35:
+    print("Its very hot")
+elif Temperature > 15 and Temperature < 30:
+    print("Its moderate")
+else:
+    print("Its cool")
+
+
+
+#Looping STatments
+
+#For loop
+num = [10, 20, 30]
+for num in num:
+    print(num)
+
+#while loop
+count = 0
+while count < 10:
+    print(count)
+    count +=1
+
+
+
+#Jumping Statements
+
+#break statements
+for n in range(10):
+    if n == 6:
+        break
+    print(n)
+
+# continue statement
+for n in range(10):
+    if n % 2 == 0:
+        continue
+    print(n)
+
+
+
+#Special FUnctions
+jets = ["Rafale", "Su 30 MKI", "Tejas"]
+
+#len
+print(len(jets)) #3
+
+#id
+print(id(jets)) 2077288510144
+
+#type
+print(type(jets)) ## Output: <class 'list'>
+
+# range()
+for i in range(5):
+    print(i)  # Output: 0 1 2 3 4
 
