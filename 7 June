@@ -1,0 +1,11 @@
+#OOP (Object Oriendted programming) n Python
+
+
+#Class and object
+# A class is a blueprint or a template for creating objects.
+# An object is an instance of a class, and it represents a specific entity with its own unique set of attribute values.
+ class MyClass:
+    pass  # This is an empty class
+
+ obj = MyClass()  # Creating an object of the MyClass class
+     
