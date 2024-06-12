@@ -1,0 +1,196 @@
+# Python GUI with Tkinter
+
+## Introduction
+# Tkinter is the standard GUI library for Python. Python, when combined with Tkinter,
+# provides a fast and easy way to create GUI applications.
+
+## Importing Tkinter
+import tkinter as tk
+from tkinter import ttk
+
+## Creating the main window
+root = tk.Tk()
+root.title("My GUI Application")
+root.geometry("400x300")
+
+## Adding Widgets
+
+# Label Widget
+label = tk.Label(root, text="Hello, Tkinter!")
+label.pack(pady=10)
+
+# Button Widget
+def on_button_click():
+    print("Button clicked!")
+
+button = tk.Button(root, text="Click Me", command=on_button_click)
+button.pack(pady=10)
+
+# Entry Widget
+entry = tk.Entry(root)
+entry.pack(pady=10)
+
+# Text Widget
+text = tk.Text(root, height=5, width=30)
+text.pack(pady=10)
+
+# ComboBox Widget
+combobox = ttk.Combobox(root, values=["Option 1", "Option 2", "Option 3"])
+combobox.pack(pady=10)
+
+# Checkbutton Widget
+checkbutton = tk.Checkbutton(root, text="Check Me")
+checkbutton.pack(pady=10)
+
+# Radiobutton Widget
+var = tk.StringVar()
+radiobutton1 = tk.Radiobutton(root, text="Option 1", variable=var, value="1")
+radiobutton2 = tk.Radiobutton(root, text="Option 2", variable=var, value="2")
+radiobutton1.pack(pady=5)
+radiobutton2.pack(pady=5)
+
+# Listbox Widget
+listbox = tk.Listbox(root)
+listbox.insert(1, "Item 1")
+listbox.insert(2, "Item 2")
+listbox.insert(3, "Item 3")
+listbox.pack(pady=10)
+
+## Running the Application
+root.mainloop()
+
+## Full Example
+# Here is a full example that includes several widgets:
+import tkinter as tk
+from tkinter import ttk
+
+def on_button_click():
+    print("Button clicked!")
+
+root = tk.Tk()
+root.title("My GUI Application")
+root.geometry("400x300")
+
+label = tk.Label(root, text="Hello, Tkinter!")
+label.pack(pady=10)
+
+button = tk.Button(root, text="Click Me", command=on_button_click)
+button.pack(pady=10)
+
+entry = tk.Entry(root)
+entry.pack(pady=10)
+
+text = tk.Text(root, height=5, width=30)
+text.pack(pady=10)
+
+combobox = ttk.Combobox(root, values=["Option 1", "Option 2", "Option 3"])
+combobox.pack(pady=10)
+
+checkbutton = tk.Checkbutton(root, text="Check Me")
+checkbutton.pack(pady=10)
+
+var = tk.StringVar()
+radiobutton1 = tk.Radiobutton(root, text="Option 1", variable=var, value="1")
+radiobutton2 = tk.Radiobutton(root, text="Option 2", variable=var, value="2")
+radiobutton1.pack(pady=5)
+radiobutton2.pack(pady=5)
+
+listbox = tk.Listbox(root)
+listbox.insert(1, "Item 1")
+listbox.insert(2, "Item 2")
+listbox.insert(3, "Item 3")
+listbox.pack(pady=10)
+
+root.mainloop()
+
+
+
+
+
+
+#Basic tkinter applications
+import tkinter as tk
+
+# Create the main window
+root = tk.Tk()
+root.title("Basic Tkinter Window")
+
+# Create a label
+label = tk.Label(root, text="Hello, Tkinter!")
+label.pack()
+
+# Run the application
+root.mainloop()
+
+#adding buttons
+def on_button_click():
+    print("Button clicked!")
+
+button = tk.Button(root, text="Click Me", command=on_button_click)
+button.pack()
+
+#entry widget
+entry = tk.Entry(root)
+entry.pack()
+
+def show_entry():
+    print("Entered text:", entry.get())
+
+button = tk.Button(root, text="Show Entry", command=show_entry)
+button.pack()
+
+#pack
+label1 = tk.Label(root, text="Label 1")
+label1.pack(side=tk.LEFT)
+
+label2 = tk.Label(root, text="Label 2")
+label2.pack(side=tk.RIGHT)
+
+#grid
+label1 = tk.Label(root, text="Label 1")
+label1.grid(row=0, column=0)
+
+label2 = tk.Label(root, text="Label 2")
+label2.grid(row=1, column=1)
+
+#place
+label1 = tk.Label(root, text="Label 1")
+label1.place(x=50, y=50)
+
+label2 = tk.Label(root, text="Label 2")
+label2.place(x=100, y=100)
+
+#Creating a simple application
+import tkinter as tk
+
+def display_text():
+    entered_text = entry.get()
+    label.config(text=entered_text)
+
+root = tk.Tk()
+root.title("Simple Tkinter App")
+
+label = tk.Label(root, text="Enter something:")
+label.pack()
+
+entry = tk.Entry(root)
+entry.pack()
+
+button = tk.Button(root, text="Display", command=display_text)
+button.pack()
+
+root.mainloop()
+
+
+
+
+
+# Python tkinter hello world program 
+  
+from tkinter import *
+  
+root = Tk() 
+a = Label(root, text ="Hello World") 
+a.pack() 
+  
+root.mainloop() 
