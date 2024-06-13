@@ -1,1 +1,53 @@
+# Tkinter Widgets in Python
+
+import tkinter as tk
+from tkinter import messagebox
+
+# 1. Button
+def button_clicked():
+    print("Button clicked!")
+
+root = tk.Tk()
+root.title("Tkinter Widgets")
+
+button = tk.Button(root, text="Click Me", command=button_clicked)
+button.pack(pady=10)
+
+# 2. Label
+label = tk.Label(root, text="This is a Label")
+label.pack(pady=10)
+
+# 3. Entry
+def get_entry_text():
+    print(entry.get())
+
+entry = tk.Entry(root)
+entry.pack(pady=10)
+
+entry_button = tk.Button(root, text="Get Entry Text", command=get_entry_text)
+entry_button.pack(pady=10)
+
+# 4. Text
+text = tk.Text(root, height=5, width=40)
+text.pack(pady=10)
+
+# 5. Checkbutton
+def show_checkbutton_status():
+    print(check_var.get())
+
+check_var = tk.IntVar()
+checkbutton = tk.Checkbutton(root, text="Check Me", variable=check_var, command=show_checkbutton_status)
+checkbutton.pack(pady=10)
+
+# 6. Radiobutton
+def show_radiobutton_status():
+    print(radio_var.get())
+
+radio_var = tk.StringVar(value="Option 1")
+radiobutton1 = tk.Radiobutton(root, text="Option 1", variable=radio_var, value="Option 1", command=show_radiobutton_status)
+radiobutton2 = tk.Radiobutton(root, text="Option 2", variable=radio_var, value="Option 2", command=show_radiobutton_status)
+radiobutton1.pack(pady=5)
+radiobutton2.pack(pady=5)
+
+
 
