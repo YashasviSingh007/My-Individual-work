@@ -1,1 +1,35 @@
+# 7. Listbox
+def show_selected_item():
+    selected = listbox.get(listbox.curselection())
+    print(selected)
 
+listbox = tk.Listbox(root)
+listbox.insert(1, "Item 1")
+listbox.insert(2, "Item 2")
+listbox.insert(3, "Item 3")
+listbox.pack(pady=10)
+
+listbox_button = tk.Button(root, text="Get Selected Item", command=show_selected_item)
+listbox_button.pack(pady=10)
+
+# 8. Canvas
+canvas = tk.Canvas(root, width=200, height=100)
+canvas.create_line(0, 0, 200, 100)
+canvas.create_line(0, 100, 200, 0, fill="red", dash=(4, 4))
+canvas.pack(pady=10)
+
+# 9. Scale
+def show_scale_value(val):
+    print(scale.get())
+
+scale = tk.Scale(root, from_=0, to=100, orient="horizontal", command=show_scale_value)
+scale.pack(pady=10)
+
+# 10. MessageBox
+def show_messagebox():
+    messagebox.showinfo("Message Box", "Hello, Tkinter!")
+
+messagebox_button = tk.Button(root, text="Show Message Box", command=show_messagebox)
+messagebox_button.pack(pady=10)
+
+root.mainloop()
