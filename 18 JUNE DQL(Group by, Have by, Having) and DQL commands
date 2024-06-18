@@ -1,0 +1,202 @@
+-- GROUP BY Clause
+-- In SQL, the GROUP BY clause is used to group rows that have the same values into summary rows.
+-- Example:
+-- GROUP BY with HAVING 
+SELECT cname, COUNT(*) AS Number
+FROM customer
+GROUP BY cname
+HAVING Number >= 1;
+
+-- GROUP BY with CONCAT to get concatenated values
+SELECT location, GROUP_CONCAT(DISTINCT pname) AS product_names
+FROM products
+GROUP BY location;
+
+-- GROUP BY with aggregate functions (COUNT, MAX, MIN, AVG, SUM)
+SELECT location, SUM(stock) AS total_stock
+FROM products
+GROUP BY location;
+
+-- ORDER BY Clause
+-- The ORDER BY clause is used ordering rows in a specific way like ascending or descending order.
+-- Example:
+-- Order by price in ascending order
+SELECT pid, pname, price
+FROM products
+ORDER BY price ASC;
+
+-- Order by age in descending order
+SELECT cid, cname, age
+FROM customer
+ORDER BY age DESC;
+
+-- HAVING Clause
+-- The HAVING clause is used with GROUP BY to filter groups based on a specified condition.
+-- Example:
+-- Find products with stock less than 10
+SELECT pid, pname, stock
+FROM products
+GROUP BY pid, pname, stock
+HAVING stock < 10;
+
+-- Find locations where total stock of products is greater than 50
+SELECT location, SUM(stock) AS total_stock
+FROM products
+GROUP BY location
+HAVING SUM(stock) > 50;
+
+-- Solutions to Questions
+
+-- GROUP BY Questions
+-- 1) Find the total stock of products for each location.
+SELECT location, SUM(stock) AS total_stock 
+FROM products 
+GROUP BY location;
+
+-- 2) Find the number of products in each price range.
+SELECT CASE 
+ WHEN price BETWEEN 0 AND 10000 THEN '0-10000' 
+ WHEN price BETWEEN 10001 AND 20000 THEN '10000-20000'
+ WHEN price BETWEEN 20001 AND 50000 THEN '20000-50000' 
+ ELSE '50000+' 
+ END AS price_range, COUNT(*) AS product_count
+ FROM products 
+ GROUP BY price_range;
+ 
+-- 3) Find the average age of customers grouped by their location.
+SELECT SUBSTRING(addr, 1, 3) AS location, AVG(age) AS avg_age 
+FROM customer 
+GROUP BY location;
+
+-- ORDER BY Questions
+-- 1) Retrieve all products ordered by their price in descending order.
+SELECT * 
+FROM products 
+ORDER BY price DESC;
+
+-- 2) Retrieve all customers ordered by their age in ascending order.
+SELECT * 
+FROM customer 
+ORDER BY age ASC;
+
+-- 3) Retrieve all orders ordered by the order amount in descending order and then by the customer name in ascending order.
+SELECT o.oid, c.cname, o.amt 
+FROM orders o 
+JOIN customer c ON o.cid = c.cid 
+ORDER BY o.amt DESC, c.cname ASC;
+
+-- HAVING Questions
+-- 1) Find the locations where the total stock of products is greater than 20.
+SELECT location, SUM(stock) AS total_stock 
+FROM products 
+GROUP BY location 
+HAVING SUM(stock) > 20;
+
+-- 2) Find the customers who have placed orders with a total amount greater than 10000.
+SELECT c.cid, c.cname, SUM(o.amt) AS total_amount 
+FROM customer c 
+JOIN orders o ON c.cid = o.cid 
+GROUP BY c.cid, c.cname 
+HAVING SUM(o.amt) > 10000;
+
+-- 3) Find the products that have a stock level between 10 and 20 and are located in Mumbai.
+SELECT p.pid, p.pname, p.stock 
+FROM products p 
+WHERE p.location = 'Mumbai' 
+GROUP BY p.pid, p.pname, p.stock 
+HAVING p.stock BETWEEN 10 AND 20;
+
+
+
+
+
+
+-- DQL COMMANDS
+-- 1) DQL stands for Data Query Language.
+
+-- SELECT
+-- Used to retrieve rows selected from one or more tables.
+-- SELECT can be used in many ways
+-- A) SELECT With DISTINCT Clause
+-- The DISTINCT Clause after SELECT eliminates duplicate rows from the result set.
+SELECT DISTINCT cname,addr FROM customer;
+
+-- B) SELECT all columns(*)
+SELECT * FROM orders;
+
+-- C) SELECT by column name
+SELECT oid FROM orders;
+
+-- D) SELECT with LIKE(%)
+-- Basically helps in searching using some syllables of the name
+-- a) "Ra" anywhere
+SELECT * FROM customer WHERE cname LIKE "%Ra%";
+
+-- b) Begins With "Ra"
+SELECT * FROM customer WHERE cname LIKE "Ra%";
+
+-- a) Ends With "vi
+SELECT * FROM customer WHERE cname LIKE "%vi";
+
+-- E) SELECT with CASE or IF
+-- a) CASE
+SELECT cid,
+	   cname,
+       CASE WHEN cid > 102 THEN 'Pass' ELSE 'Fail' END AS 'Remark'
+FROM customer;
+
+-- b) IF
+SELECT cid,
+	   cname,
+       IF(cid > 102, 'Pass', 'Fail')AS 'Remark'
+FROM customer;
+
+-- F) SELECT with a LIMIT Clause
+SELECT * 
+FROM customer
+ORDER BY cid
+LIMIT 2;
+
+-- G) SELECT with WHERE
+SELECT * FROM customer WHERE cname = "Ravi";
+
+-- Solutions to Questions
+
+-- 1) Write a query to retrieve the distinct locations of products from the products table.
+SELECT DISTINCT location 
+FROM products;
+
+-- 2) Write a query to retrieve the customer ID, customer name, and the length of their address
+   as address_length from the customer table.
+SELECT cid, cname, LENGTH(addr) AS address_length
+FROM customer;
+
+-- 3) Write a query to retrieve the order ID, customer name, product name, and the concatenated
+   string 'Order for [product name] by [customer name]' as order_description from the orders, customer,
+   and products tables.
+SELECT o.oid, c.cname, p.pname, 
+       CONCAT('Order for ', p.pname, ' by ', c.cname) AS order_description
+FROM orders o
+JOIN customer c ON o.cid = c.cid
+JOIN products p ON o.pid = p.pid;
+
+-- 4) Write a query to retrieve the product ID, product name, price, and a new column price_category that categorizes
+   the products based on their price range (e.g., 'Low' for prices less than 10000, 'Medium' for prices between 10000
+   and 50000, and 'High' for prices greater than 50000).
+SELECT pid, pname, price,
+       CASE
+           WHEN price < 10000 THEN 'Low'
+           WHEN price BETWEEN 10000 AND 50000 THEN 'Medium'
+           ELSE 'High'
+       END AS price_category
+FROM products;
+
+-- 5) Write a query to retrieve the customer ID, customer name, and the total order amount for each customer.
+   The total order amount should be retrieved from a subquery that calculates the sum of order amounts for each
+   customer.
+SELECT c.cid, c.cname, (
+    SELECT SUM(amt)
+    FROM orders o
+    WHERE o.cid = c.cid
+) AS total_order_amount
+FROM customer c;
