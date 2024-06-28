@@ -1,0 +1,21 @@
+import nbformat
+
+# Load the Jupyter notebook
+file_path = 'path_to_your_file/Pandas-1-Introduction to Pandas,Installing Pandas,Pandas Series.ipynb'
+with open(file_path, 'r', encoding='utf-8') as f:
+    notebook = nbformat.read(f, as_version=4)
+
+# Extracting text content from the notebook cells
+notes = []
+for cell in notebook.cells:
+    if cell.cell_type == 'markdown':
+        notes.append(cell.source)
+
+# Combine all notes into a single text block
+compact_notes = "\n\n".join(notes)
+
+# Save the compact notes to a text file
+with open('compact_notes.txt', 'w', encoding='utf-8') as f:
+    f.write(compact_notes)
+
+print("Compact notes have been saved to compact_notes.txt")
