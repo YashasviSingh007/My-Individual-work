@@ -1,0 +1,106 @@
+# pandas_data_inspection_exploration.py
+
+"""
+Pandas DataFrame: Data Inspection and Data Exploration
+======================================================
+
+This guide covers the basics of working with Pandas DataFrames, including data inspection and exploration techniques.
+"""
+
+import pandas as pd
+
+# Creating a DataFrame
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva'],
+    'Age': [24, 27, 22, 32, 29],
+    'City': ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix']
+}
+df = pd.DataFrame(data)
+print("DataFrame:\n", df)
+
+# Data Inspection
+# ===============
+
+# Viewing the first few rows of the DataFrame
+print("\nFirst 5 rows:\n", df.head())
+
+# Viewing the last few rows of the DataFrame
+print("\nLast 5 rows:\n", df.tail())
+
+# Getting the shape of the DataFrame
+print("\nShape of the DataFrame:", df.shape)
+
+# Getting information about the DataFrame
+print("\nInformation about the DataFrame:")
+df.info()
+
+# Descriptive statistics
+print("\nDescriptive statistics:\n", df.describe())
+
+# Data Exploration
+# ================
+
+# Selecting a single column
+print("\nSelecting 'Name' column:\n", df['Name'])
+
+# Selecting multiple columns
+print("\nSelecting 'Name' and 'Age' columns:\n", df[['Name', 'Age']])
+
+# Filtering rows based on a condition
+print("\nFiltering rows where Age > 25:\n", df[df['Age'] > 25])
+
+# Grouping data
+grouped = df.groupby('City').mean()
+print("\nGrouped by 'City' and averaged:\n", grouped)
+
+# Handling Missing Data
+# =====================
+
+# Creating a DataFrame with missing values
+data_with_nan = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva'],
+    'Age': [24, None, 22, 32, 29],
+    'City': ['New York', 'Los Angeles', None, 'Houston', 'Phoenix']
+}
+df_with_nan = pd.DataFrame(data_with_nan)
+print("\nDataFrame with missing values:\n", df_with_nan)
+
+# Dropping missing values
+print("\nDropping rows with missing values:\n", df_with_nan.dropna())
+
+# Filling missing values
+print("\nFilling missing values with a specified value:\n", df_with_nan.fillna({'Age': 0, 'City': 'Unknown'}))
+
+# More DataFrame Operations
+# =========================
+
+# Adding a new column
+df['Salary'] = [70000, 80000, 50000, 90000, 60000]
+print("\nDataFrame with new 'Salary' column:\n", df)
+
+# Removing a column
+df = df.drop(columns=['Salary'])
+print("\nDataFrame after removing 'Salary' column:\n", df)
+
+# Sorting the DataFrame
+print("\nDataFrame sorted by 'Age':\n", df.sort_values(by='Age'))
+
+# Merging DataFrames
+additional_data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva'],
+    'Gender': ['F', 'M', 'M', 'M', 'F']
+}
+df_additional = pd.DataFrame(additional_data)
+merged_df = pd.merge(df, df_additional, on='Name')
+print("\nMerged DataFrame:\n", merged_df)
+
+# Saving and Loading Data
+# =======================
+
+# Saving DataFrame to a CSV file
+df.to_csv('dataframe.csv', index=False)
+print("\nDataFrame saved to 'dataframe.csv'")
+
+# Loading DataFrame from a CSV file
+loaded_df = pd.read_csv('dataframe.csv')
+print("\nDataFrame loaded from 'dataframe.csv':\n", loaded_df)
