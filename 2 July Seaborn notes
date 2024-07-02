@@ -1,1 +1,361 @@
+# # How to install seaborn libary
 
+```python
+%pip install seaborn
+
+import seaborn as sns
+```
+
+# ## load_dataset() 
+->  It is used to load a dataset from the online repository https://github.com/mwaskom/seaborn-data . This function is particularly handy for quickly accessing standard datasets for practice, demonstration, and educational purposes.
+
+```python
+import seaborn as sns 
+import pandas as pd
+import matplotlib.pyplot as plt
+data=sns.load_dataset("flights")  #store in a dataframe 
+data.head(10)
+```
+
+# # LINEPLOT
+
+# **BASIC PARAMETERS**
+1. x, y vectors or keys in data
+Variables that specify positions on the x and y axes
+
+2. data :pandas.DataFrame,numpy.ndarray, mapping, or sequence
+Input data structure. Either a long-form collection of vectors that can be assigned to named variables or a wide-form dataset that will be internally reshaped
+
+
+
+
+```python
+import seaborn as sns
+import pandas as pd
+# use of data in form of dataframe
+# Creating a DataFrame
+data = {'Time': [1, 2, 3, 4, 5], 'Value': [3, 5, 2, 4, 6]}
+df = pd.DataFrame(data)
+
+# Plotting using Seaborn
+sns.lineplot(x='Time', y='Value', data=df)
+plt.show()  
+```
+
+```python
+import seaborn as sns
+import matplotlib as plt
+
+# use of list 
+x=[1,2,3,4,5]
+y=[2,4,6,8,10]
+
+sns.lineplot(x=x,y=y)
+```
+
+# ### Using the dataset 
+
+
+```python
+data=sns.load_dataset("flights")
+sns.lineplot(x="year",y="passengers",data=data)
+# data is the dataframe of flights dataset
+```
+
+# ### Styling the lineplot
+
+```python
+sns.lineplot(x="year",y="passengers",data=data,hue="month",style="month",markers=True,dashes=False)   
+# hue is just like to give extra information of a particular (month)
+# Grouping variable that will produce lines with different colors.
+```
+
+# #### Using some features of matplotlib to increase the size of figure and to add the labels to the data 
+
+```python
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10,6))
+sns.lineplot(x="year",y="passengers",data=data,hue="month",style="month",markers=True,dashes=False)   # hue is just like to give extra information of a particular (month )
+plt.title("monthly passenger")
+plt.xlabel("year")
+plt.ylabel("no of passengers")
+plt.show()
+```
+
+# # Histogram 
+
+# A histogram is a classic visualization tool that represents the distribution of one or more variables by counting the number of observations that fall within discrete bins.
+
+```python
+penguins=sns.load_dataset("penguins")
+penguins.head(20)
+sns.histplot(data=penguins,x="flipper_length_mm",bins=[170,175,180,185,190,195],color="green")
+plt.show()
+```
+
+# #### KDE PARAMETER
+bool : If True, compute a kernel density estimate to smooth the distribution and show on the plot as (one or more) line(s).
+
+```python
+sns.histplot(data=penguins, x="flipper_length_mm", bins=30,binwidth=3, kde=True)
+```
+
+```python
+sns.histplot(data=penguins, x="flipper_length_mm", hue="species")
+```
+
+# #### using multiple 
+multiple{“layer”, “dodge”, “stack”, “fill”}
+Approach to resolving multiple elements when semantic mapping creates subsets. Only relevant with univariate data.
+
+```python
+sns.histplot(data=penguins, x="flipper_length_mm", hue="species", multiple="stack")
+```
+
+# #### Using ELEMENT PARAMETER
+element{“bars”, “step”, “poly”}
+Visual representation of the histogram statistic.
+
+```python
+sns.histplot(penguins, x="flipper_length_mm", hue="species", element="step")
+```
+
+# ### using stat
+statstr
+Aggregate statistic to compute in each bin.
+
+count: show the number of observations in each bin
+
+frequency: show the number of observations divided by the bin width
+
+probability or proportion: normalize such that bar heights sum to 1
+
+percent: normalize such that bar heights sum to 100
+
+density: normalize such that the total area of the histogram equals 1
+
+```python
+tips = sns.load_dataset("tips")
+sns.histplot(data=tips, x="size", stat="percent")
+```
+
+```python
+sns.histplot(data=tips, x="day", hue="sex", multiple="dodge", shrink=.8)
+```
+
+# # BARPLOT
+
+
+# A bar plot represents an aggregate or statistical estimate for a numeric variable with the height of each rectangle and indicates the uncertainty around that estimate using an error bar. 
+
+
+# ### Significance of black line in bars 
+The black line at the top of each bar is referred to as an "error bar." 
+The primary purpose of the error bar is to represent the variability or uncertainty about the measured value. 
+Visual Representation:
+The line typically extends from the top of the bar to both directions vertically. The length of the line is determined based on the calculation (standard deviation, standard error, or confidence interval). If the error bar is small, it suggests that the measurements are very consistent. A large error bar, conversely, suggests more variability and less certainty about the mean value.
+
+```python
+sns.barplot(x="island",y="body_mass_g",data=penguins)
+```
+
+```python
+sns.barplot(x="island",y="body_mass_g",data=penguins,hue="sex")
+```
+
+```python
+# flights dataset 
+flights_wide= data.pivot(index="year",columns="month",values="passengers")
+flights_wide.head()
+```
+
+```python
+sns.barplot(flights_wide)
+```
+
+```python
+sns.barplot(flights_wide["Jun"])
+```
+
+# # HEATMAP
+
+
+# 
+### Correlation with Heatmap
+
+It uses colored cells to show correlation between 2 discrete dimensions. It is very important in feature selection
+
+Each square shows the correlation between the variables on each axis. Correlation ranges from -1 to +1. Values closer to zero means there is no linear trend between the two variables. The close to 1 the correlation is the more positively correlated they are; that is as one increases so does the other and the closer to 1 the stronger this relationship is. A correlation closer to -1 is similar, but instead of both increasing one variable will decrease as the other increases
+
+```python
+df=sns.load_dataset("tips")
+```
+
+```python
+df.corr(numeric_only=True)
+```
+
+# Parameters:
+data:rectangular dataset
+2D dataset that can be coerced into an ndarray. If a Pandas DataFrame is provided, the index/column information will be used to label the columns and rows.
+
+vmin, vmax: floats, optional
+Values to anchor the colormap, otherwise they are inferred from the data and other keyword arguments.
+
+cmap:matplotlib colormap name or object, or list of colors, optional
+The mapping from data values to color space. If not provided, the default will depend on whether center is set.
+
+annot:bool or rectangular dataset, optional
+If True, write the data value in each cell. If an array-like with the same shape as data, then use this to annotate the heatmap instead of the data. Note that DataFrames will match on position, not index.
+
+```python
+sns.heatmap(df.corr(numeric_only=True),annot=True,linewidth=2,cmap="crest")
+```
+
+# # Scatterplot
+
+```python
+sns.scatterplot(data=df,x="total_bill",y="tip")
+```
+
+# ### Formatting 
+size: Grouping variable that will produce points with different sizes.
+
+style: Grouping variable that will produce points with different markers.  
+
+palette: Grouping variable that will produce points with different markers.  
+
+markers: Object determining how to draw the markers for different levels.
+
+alpha: Proportional opacity of the points.
+
+```python
+sns.scatterplot(data=df,x="total_bill",y="tip",hue="time",style="time",size="size",palette="deep",alpha=0.8)
+```
+
+# # Kdeplot
+
+# A KDE plot, or Kernel Density Estimation plot, is a statistical tool that generates a smoothed, continuous probability density function (PDF) based on a set of data points.
+
+Usage of KDE Plot:
+Visualization: Unlike histograms, KDE plots use a smooth curve to represent the distribution more accurately, providing insights into the overall shape of the data.
+Comparison: It facilitates the comparison of distributions across different data subsets, highlighting differences in central tendencies, variability, and modality.
+Outlier Detection: KDE plots can pinpoint outliers which appear as spikes where data points are sparse.
+Analysis of Distribution Shape: The plot aids in assessing skewness (data asymmetry) and kurtosis (peak sharpness), indicating distribution traits.
+
+Interpreting a KDE Plot:
+Peaks: Represent the modes of the data, where data points are most dense. Higher peaks suggest a greater concentration of data points.
+Curve Width: Indicates variability; a wider curve shows more spread in data, while a narrower curve implies closeness around the mean.
+Curve Shape:
+Symmetry indicates even distribution.
+Skewness (curve lean) shows data asymmetry; right skew (tail on the right) or left skew (tail on the left).
+
+```python
+data=sns.load_dataset("tips")
+```
+
+```python
+data.head()
+```
+
+```python
+sns.kdeplot(x="total_bill",data=data)
+# peak indicate the mode of the data( maximum datapoints )
+# normal distribution 
+```
+
+```python
+sns.kdeplot(x="total_bill",data=data,hue="sex")
+```
+
+```python
+sns.kdeplot(
+    data=data,
+    x="total_bill",
+    hue="time",
+    fill =True,
+    palette="flare",
+    alpha=0.5,
+    cut=0
+)
+plt.title("Density Plot of Total Bill by Time of Day")
+plt.show()
+```
+
+# # RUGPLOT
+
+# The **Seaborn.rugplot()** method is used to plot marginal distributions and allows to draw ticks along the x and y axes. By clearly displaying the locations of individual observations, this function is meant to supplement existing displays.
+
+So the rugplot() method essentially add rugs or ticks along an already existing plot.
+
+```python
+sns.kdeplot(data=data,x="tip")
+sns.rugplot(data=data,x="tip")
+```
+
+```python
+sns.scatterplot(data=data,x="total_bill",y="tip")
+sns.rugplot(data=data,x="total_bill",y="tip",height=0.07,alpha=1)
+```
+
+# # BOXPLOT
+
+# A box plot (or box-and-whisker plot) shows the distribution of quantitative data in a way that facilitates comparisons between variables or across levels of a categorical variable. The box shows the quartiles of the dataset while the whiskers extend to show the rest of the distribution, except for points that are determined to be “outliers” using a method that is a function of the inter-quartile range.
+
+     Q1-1.5IQR   Q1   median  Q3   Q3+1.5IQR
+                  |-----:-----|
+  o      |--------|     :     |--------|    o  o
+                  |-----:-----|
+outlier           <----------->            outliers
+                       IQR
+                       
+ 
+
+
+```python
+data.head()
+```
+
+```python
+sns.boxplot(x="day",y="total_bill",data=data)
+```
+
+```python
+sns.boxplot(x="day",y="total_bill",data=data,hue="time")
+```
+
+```python
+sns.boxplot(x="day",y="total_bill",data=data,hue="time",showmeans=True,meanprops={"marker":"*","markeredgecolor":"b"},order=["Fri","Sat"],palette="plasma")
+```
+
+# # VIOLIN PLOT
+
+```python
+sns.violinplot(x="day",y="total_bill",data=data)
+```
+
+```python
+sns.violinplot(x="time",y="total_bill",data=data,order=["Dinner","Lunch"])
+```
+
+```python
+sns.violinplot(x="day",y="total_bill",data=data,hue="time",order=["Fri"],split=True)
+```
+
+# # PAIRPLOT
+
+```python
+sns.pairplot(data)
+```
+
+```python
+data.head()
+```
+
+```python
+sns.pairplot(data,hue="sex")
+```
+
+```python
+sns.pairplot(data,hue="sex",x_vars=["total_bill","tip"],y_vars=["total_bill","tip"])
+```
