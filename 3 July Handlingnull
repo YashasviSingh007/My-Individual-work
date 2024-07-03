@@ -1,0 +1,95 @@
+# handling_nulls.py
+
+"""
+Handling Null Values in Pandas DataFrame
+========================================
+
+This guide covers various methods for handling null values in a Pandas DataFrame.
+"""
+
+import pandas as pd
+import numpy as np
+
+# Creating a DataFrame with null values
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva'],
+    'Age': [24, np.nan, 22, 32, 29],
+    'City': ['New York', 'Los Angeles', np.nan, 'Houston', 'Phoenix'],
+    'Salary': [70000, 80000, 50000, np.nan, 60000]
+}
+df = pd.DataFrame(data)
+print("DataFrame with null values:\n", df)
+
+# 1. Identifying Null Values
+# ==========================
+
+# Checking for null values
+print("\nChecking for null values:\n", df.isnull())
+
+# Counting null values in each column
+print("\nCounting null values in each column:\n", df.isnull().sum())
+
+# 2. Dropping Null Values
+# =======================
+
+# Dropping rows with any null values
+df_dropna_any = df.dropna()
+print("\nDataFrame after dropping rows with any null values:\n", df_dropna_any)
+
+# Dropping rows with all null values
+df_dropna_all = df.dropna(how='all')
+print("\nDataFrame after dropping rows with all null values:\n", df_dropna_all)
+
+# Dropping columns with any null values
+df_dropna_axis1 = df.dropna(axis=1)
+print("\nDataFrame after dropping columns with any null values:\n", df_dropna_axis1)
+
+# 3. Filling Null Values
+# ======================
+
+# Filling null values with a specified value
+df_fillna_value = df.fillna(0)
+print("\nDataFrame after filling null values with 0:\n", df_fillna_value)
+
+# Filling null values with the mean of the column
+df_fillna_mean = df.copy()
+df_fillna_mean['Age'].fillna(df_fillna_mean['Age'].mean(), inplace=True)
+df_fillna_mean['Salary'].fillna(df_fillna_mean['Salary'].mean(), inplace=True)
+print("\nDataFrame after filling null values with column mean:\n", df_fillna_mean)
+
+# Forward fill (propagate last valid observation forward)
+df_ffill = df.fillna(method='ffill')
+print("\nDataFrame after forward fill:\n", df_ffill)
+
+# Backward fill (propagate next valid observation backward)
+df_bfill = df.fillna(method='bfill')
+print("\nDataFrame after backward fill:\n", df_bfill)
+
+# 4. Interpolating Null Values
+# ============================
+
+# Interpolating missing values
+df_interpolate = df.interpolate()
+print("\nDataFrame after interpolating null values:\n", df_interpolate)
+
+# 5. Replacing Null Values
+# ========================
+
+# Replacing null values with a specified value
+df_replace = df.replace(to_replace=np.nan, value=99)
+print("\nDataFrame after replacing null values with 99:\n", df_replace)
+
+# Summary
+# =======
+"""
+In this guide, we covered:
+1. Identifying null values in a DataFrame using `isnull()` and `isnull().sum()`.
+2. Dropping null values using `dropna()` with different parameters.
+3. Filling null values with specific values, mean, forward fill, and backward fill using `fillna()`.
+4. Interpolating null values using `interpolate()`.
+5. Replacing null values with specific values using `replace()`.
+"""
+
+# Saving the DataFrame to a CSV file after handling null values
+df_interpolate.to_csv('handled_nulls.csv', index=False)
+print("\nDataFrame after handling null values saved to 'handled_nulls.csv'")
